@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity() {
         radio_operator.setOnCheckedChangeListener { group, checkedId ->
             val radioButton = findViewById<RadioButton>(group.checkedRadioButtonId)
             OPERATOR = radioButton.text.toString()
-            text_result.text = "HASIL"
+            text_result.text = "Hasil"
         }
     }
 
