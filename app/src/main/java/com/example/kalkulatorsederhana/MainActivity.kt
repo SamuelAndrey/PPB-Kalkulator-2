@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             val editor = sharedPreferences.edit()
             editor.clear()
             editor.apply()
-            showMessage("Semua history sudah terhapus, buka kembali aplikasi untuk melihat")
+            showMessage("Semua history sudah terhapus")
             data.clear()
 
             val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
