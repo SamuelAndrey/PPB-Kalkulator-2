@@ -18,22 +18,20 @@ class MainActivity : AppCompatActivity() {
 
     private var OPERATOR: String? = null
     var data: ArrayList<ItemsViewModel> = ArrayList()
-    lateinit var courseRV: RecyclerView
-    lateinit var courseRVAdapter: CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // shared preferences
         val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
         val gson = Gson()
-        val json = sharedPreferences.getString("histori", "")
-        val type: Type = object : TypeToken<ArrayList<ItemsViewModel?>?>() {}.type
-        data = gson.fromJson<Any>(json, type) as ArrayList<ItemsViewModel>
+        val json = sharedPreferences.getString("test3", null)
 
-        if (data == null) {
-            data = ArrayList()
+        val type: Type = object : TypeToken<ArrayList<ItemsViewModel?>?>() {}.type
+        if(data.isEmpty()) {
+            if(json != null) {
+                data = gson.fromJson<Any>(json, type) as ArrayList<ItemsViewModel>
+            }
         }
 
         //  menampilkan recycler view
@@ -91,7 +89,6 @@ class MainActivity : AppCompatActivity() {
                 val tanda = tanda()
                 data.add(ItemsViewModel("$value1 $tanda $value2 = " + calculator(value1, value2)))
 
-
                 val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
 
                 recyclerView.layoutManager = LinearLayoutManager(this)
@@ -101,7 +98,6 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.adapter = adapter
 
                 setupListener()
-
 
 
                 // method for saving the data in array list.
@@ -121,13 +117,11 @@ class MainActivity : AppCompatActivity() {
 
                 // below line is to save data in shared
                 // prefs in the form of string.
-                editor.putString("histori", json)
+                editor.putString("test3", json)
 
                 // below line is to apply changes
                 // and save data in shared prefs.
                 editor.apply()
-
-
 
             } else {
                 showMessage("Masukkan data dengan benar")
@@ -144,4 +138,5 @@ class MainActivity : AppCompatActivity() {
     private fun showMessage(message: String) {
         Toast.makeText(applicationContext,message,Toast.LENGTH_SHORT).show()
     }
+
 }
