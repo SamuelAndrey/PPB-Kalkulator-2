@@ -1,5 +1,5 @@
-# PPB-Kalkulator-Bagus
--> Tugas PPB kalkulator bagus <br>
+# PPB-Kalkulator-2
+-> Tugas PPB kalkulator 2 <br>
 -> Tugas setelah uts <br>
 -> Dibuat menggunakan kotlin
 
