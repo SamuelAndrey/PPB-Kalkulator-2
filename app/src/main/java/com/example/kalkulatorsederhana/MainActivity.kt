@@ -1,18 +1,16 @@
 package com.example.kalkulatorsederhana
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.reflect.Type
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +22,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+
+        btn_hapus.setOnClickListener {
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+            showMessage("Semua history sudah terhapus, buka kembali aplikasi untuk melihat")
+            data.clear()
+
+            val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+            recyclerView.layoutManager = LinearLayoutManager(this)
+            val adapter = CustomAdapter(data)
+            recyclerView.adapter = adapter
+        }
+
+
         val gson = Gson()
         val json = sharedPreferences.getString("test3", null)
 
@@ -42,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         // perhitungan
         setupListener()
+
     }
 
     private fun validate(): Boolean {

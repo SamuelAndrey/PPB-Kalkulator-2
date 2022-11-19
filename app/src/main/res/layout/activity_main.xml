@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical"
     android:padding="20dp"
-    >
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -15,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="Kalkulator Bagus.."
-        android:textStyle="bold"
-        android:textSize="20sp"
         android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,21 +41,19 @@
         android:layout_marginTop="10dp"
         android:hint="Masukkan nilai 2"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/edit_value1"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_value1" />
 
     <RadioGroup
         android:id="@+id/radio_operator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/edit_value2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center"
-        >
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_value2">
 
         <RadioButton
             android:id="@+id/radio_addition"
@@ -96,26 +93,25 @@
         android:id="@+id/button_calculator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hitung"
-        android:backgroundTint="#00BCD4"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/radio_operator"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="#00BCD4"
+        android:text="Hitung"
+        app:layout_constraintEnd_toStartOf="@+id/btn_hapus"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/radio_operator" />
 
 
     <TextView
         android:id="@+id/text_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HASIL"
         android:layout_marginTop="20dp"
+        android:text="HASIL"
         android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@+id/button_calculator"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/button_calculator" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -128,5 +124,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_result" />
+
+    <Button
+        android:id="@+id/btn_hapus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:text="clear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_calculator"
+        app:layout_constraintTop_toBottomOf="@+id/radio_operator" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
