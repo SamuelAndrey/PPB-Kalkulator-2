@@ -2,24 +2,47 @@ package com.example.kalkulatorsederhana
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Message
+import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
 
     private var OPERATOR: String? = null
-    private lateinit var cadp : CustomAdapter
-    private lateinit var ivm : ArrayList<ItemsViewModel>
-    val data = ArrayList<ItemsViewModel>()
+    var data: ArrayList<ItemsViewModel> = ArrayList()
+    lateinit var courseRV: RecyclerView
+    lateinit var courseRVAdapter: CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // shared preferences
+        val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+        val gson = Gson()
+        val json = sharedPreferences.getString("histori", "")
+        val type: Type = object : TypeToken<ArrayList<ItemsViewModel?>?>() {}.type
+        data = gson.fromJson<Any>(json, type) as ArrayList<ItemsViewModel>
+
+        if (data == null) {
+            data = ArrayList()
+        }
+
+        //  menampilkan recycler view
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomAdapter(data)
+        recyclerView.adapter = adapter
+
+        // perhitungan
         setupListener()
     }
 
@@ -63,19 +86,48 @@ class MainActivity : AppCompatActivity() {
 
                 text_result.text = calculator(value1, value2)
 
-                val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-
-                recyclerView.layoutManager = LinearLayoutManager(this)
-
 
 
                 val tanda = tanda()
                 data.add(ItemsViewModel("$value1 $tanda $value2 = " + calculator(value1, value2)))
-                // cadp.notifyDataSetChanged()
+
+
+                val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
+
+                recyclerView.layoutManager = LinearLayoutManager(this)
 
                 val adapter = CustomAdapter(data)
 
                 recyclerView.adapter = adapter
+
+                setupListener()
+
+
+
+                // method for saving the data in array list.
+                // creating a variable for storing data in
+                // shared preferences.
+                val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+
+                // creating a variable for editor to
+                // store data in shared preferences.
+                val editor = sharedPreferences.edit()
+
+                // creating a new variable for gson.
+                val gson = Gson()
+
+                // getting data from gson and storing it in a string.
+                val json: String = gson.toJson(data)
+
+                // below line is to save data in shared
+                // prefs in the form of string.
+                editor.putString("histori", json)
+
+                // below line is to apply changes
+                // and save data in shared prefs.
+                editor.apply()
+
+
 
             } else {
                 showMessage("Masukkan data dengan benar")
